@@ -1,9 +1,9 @@
 <template>
   <ul
-    class="completed"
+    class="inProgress"
   >
     <TodoItem
-    
+      
     />
   </ul>
 </template>
@@ -12,13 +12,9 @@
 import TodoItem from '@/components/TodoItem.vue'
 
 export default {
-  name: 'ListCompleted',
+  name: 'AllTasks',
   components: {
     TodoItem
   }
 }
 </script>
-
-<style>
-
-</style>

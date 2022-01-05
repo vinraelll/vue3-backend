@@ -3,7 +3,7 @@
     class="inProgress"
   >
     <TodoItem
-    
+      
     />
   </ul>
 </template>
@@ -12,13 +12,9 @@
 import TodoItem from '@/components/TodoItem.vue'
 
 export default {
-  name: 'ListInProgress',
+  name: 'Incompleted',
   components: {
     TodoItem
   }
 }
 </script>
-
-<style>
-
-</style>

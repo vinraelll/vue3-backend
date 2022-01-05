@@ -1,43 +1,25 @@
 <template>
   <main class="main">
     <div class="container container-sm">
-      <div class="inProgress">
-        <div class="inProgress__header">
-          <h2 class="inProgress__title">In Progress</h2>
-          <div class="inProgress__counter">
-            <span>10</span>
-          </div>
-        </div>
-        <hr>
-        <ListInProgress 
-          class="inProgress__list" 
-        />
-      </div>
-      
-      <div class="completed">
-        <div class="completed__header">
-          <h2 class="completed__title">Completed</h2>
-          <div class="completed__counter">
-            <span>255</span>
-          </div>
-        </div>
-        <hr>
-        <ListCompleted 
-          class="completed__list" 
-        />
-      </div>
+      <Tabs />
+      <hr>
+      <DynamicComponent />
     </div>
   </main>
 </template>
 
 <script>
-import ListInProgress from '@/components/ListInProgress.vue'
-import ListCompleted from '@/components/ListCompleted.vue'
+import DynamicComponent from '@/components/DynamicComponent.vue'
+import Tabs from '@/components/Tabs.vue'
+import { mapGetters } from 'vuex'
 
 export default {
+computed: {
+  ...mapGetters(['allPosts', 'inProgress', 'completed'])
+},
 components: {
-    ListInProgress,
-    ListCompleted
+    DynamicComponent,
+    Tabs
   }
 }
 </script>

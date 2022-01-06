@@ -20,46 +20,49 @@
         {{ post.title }}
       </label>
     </div>
-    <div v-else>
-      <input 
-        type="text" 
-        class="edit"
-        :value="post.title"
-        @input="inputHandler"
-      >
-    </div>
+    <input 
+      type="text" 
+      class="item__edit-input"
+      :value="post.title"
+      @input="inputHandler"
+      v-else
+    >
     <div
       v-if="!post.editable"
       class="item__controls"
     >
-      <button 
+      <Button 
         class="item__edit-btn"
         @click="onEdit(post.id, post.title)"
       >
-        Edit task
-      </button>
-      <button 
+        <img src="../assets/images/edit.svg" alt="">
+      </Button>
+      <Button  
         class="item__delete-btn"
         @click="deletePost(post.id)"
       >
-        Delete task
-      </button>
+        <img src="../assets/images/delete.svg" alt="">
+      </Button>
     </div>
     <div v-else>
-      <button
-        class="item__edit-btn"
+      <Button 
+        class="item__save-btn"
         @click="onSave(post.id, savedInputValue)"
       >
-        Save
-      </button>
+        <img src="../assets/images/save.svg" alt="">
+      </Button>
     </div>
   </li>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import Button from '@/components/UI/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   data() {
     return {
       savedInputValue: ''
@@ -99,63 +102,62 @@ export default {
   margin-bottom: 15px;
 }
 
+.item__controls {
+  min-width: 100px;
+}
+
+.item__edit-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 7px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: transparent;
+}
+
 .item__edit-btn {
   margin-right: 10px;
 }
 
-.item__edit-btn,
-.item__delete-btn {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  border: 2px solid #2a2f36;
-  background-color: #333333;
-  text-transform: uppercase;
-  padding: 6px 10px;
-}
-
-.item__edit-btn:hover,
-.item__delete-btn:hover {
-  background-color: #535151;
-  border-color: #535151;
-}
-
-/* .item__text {
+.item__info {
   position: relative;
-} */
-/* 
+  padding: 0 25px;
+  
+}
+
+.item__text {
+  cursor: pointer;
+}
+
 .item__checkbox {
   position: absolute;
-  z-index: -1;
-  opacity: 0;
+  /* z-index: -1; */
+  left: 0;
+  /* padding-left: 25px; */
+  /* opacity: 0; */
+  cursor: pointer;
 }
-.item__checkbox + label {
-  display: inline-flex;
-  align-items: center;
-  user-select: none;
-}
-/* 
-.item__checkbox + label::before {
+
+.item__text::before {
   content: '';
-  display: inline-block;
+  position: absolute;
   width: 15px;
   height: 15px;
-  flex-shrink: 0;
-  flex-grow: 0;
+  left: 0;
   border: 1px solid #adb5bd;
   margin-right: 5px;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 50%;
   cursor: pointer;
+  
 }
 /* 
-.item__checkbox:checked + label::before {
+.item__checkbox:checked + .item__text::before {
   border: 2px solid #4fc1de;
   background-color: #4fc1de;
 }
-/* 
+
 .item__checkbox:checked + label::after {
   content:'';
   position: absolute;

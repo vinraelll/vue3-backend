@@ -9,7 +9,7 @@ export default {
     },
     tabName(state) {
       return state.tabName.split(' ').join('')
-    }
+    },
   },
   mutations: {
     changeTab(state, tab) {

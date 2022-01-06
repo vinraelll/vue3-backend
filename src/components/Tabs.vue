@@ -12,6 +12,7 @@
           @click="onChangeTab(tab)"
         >
           {{ tab }}
+          {{ allPosts.length }}
         </button>
       </li>
     </ul>
@@ -36,7 +37,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['allTabs'])
+    ...mapGetters(['allTabs', 'allPosts'])
   }
 }
 </script>

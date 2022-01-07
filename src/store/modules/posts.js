@@ -20,6 +20,9 @@ export default {
     saveTodo(state, { id, value }) {
       const post = state.posts.find(p => p.id === id)
       post.title = value
+    },
+    createTodo(state, todo) {
+      state.posts.push(todo)
     }
   },
   actions: {

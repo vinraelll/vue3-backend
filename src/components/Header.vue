@@ -2,31 +2,66 @@
   <header class="header">
     <div class="container">
       <nav class="nav">
-        <h1 class="header__logo">ToDo List</h1>
-        <form 
-          class="header__form"
-          @submit.prevent="createTodo"
-        >
-          <input class="header__form-input" type="text" id="createTodo" placeholder="Type new task here">
-          <label for="createTodo" class="header__form-label"></label>
-          <button 
-            class="header__form-btn"
-            type="submit"
+        <div class="header__flexbox">
+          <h1 class="header__logo">ToDo List |</h1>
+          <form 
+            class="header__form"
+            @submit.prevent="create"
           >
-            Add new task
+            <input 
+              class="header__form-input" 
+              type="text" 
+              placeholder="Type new task here"
+              v-model="newTodo" 
+              id="createTodo"
+            >
+            <label for="createTodo" class="header__form-label"></label>
+            <button 
+              class="header__form-btn"
+              type="submit"
+            >
+              Add new task
+            </button>
+          </form>
+        </div>
+        <div class="header__auth">
+          <button 
+            class="header__auth-btn"
+            @click="$emit('openModalWindow')"
+          >
+            Sign in
           </button>
-        </form>
+        </div>
       </nav>
     </div>
   </header>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
-  name: 'Header',
+  data() {
+    return {
+      newTodo: ''
+    }
+  },
   methods: {
-    createTodo() {
-      console.log('todo created');
+    ...mapMutations(['createTodo']),
+    create() {
+      if (this.newTodo.trim()) {
+        const todo = {
+          id: Date.now(),
+          title: this.newTodo,
+          body: '',
+          editable: false
+        }
+
+        this.createTodo(todo)
+        this.newTodo = ''
+      }
+
+      return
     }
   }
  
@@ -44,6 +79,15 @@ export default {
   padding: 10px 0;
   margin-bottom: 30px;
   background: #2c3e50;
+}
+
+.header__flexbox {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  margin-right: 10px;
 }
 
 .header__form {
@@ -78,6 +122,26 @@ export default {
 .header__form-btn:hover {
   background-color: #0dd6f8;
   border-color: #0dd6f8;
+}
+
+.header__auth-btn {
+  position: relative;
+  padding-right: 25px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.header__auth-btn::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -4px;
+  height: 25px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url('../assets/images/auth/login.svg');
 }
 
 </style>

@@ -103,13 +103,16 @@ export default {
 }
 
 .item__controls {
+  display: flex;
+  justify-content: space-between;
   min-width: 100px;
 }
 
 .item__edit-input {
   width: 100%;
   max-width: 500px;
-  padding: 7px;
+  margin-left: 18px;
+  padding: 7px 7px 6px 7px;
   border: none;
   border-bottom: 1px solid #ccc;
   outline: transparent;
@@ -122,95 +125,46 @@ export default {
 .item__info {
   position: relative;
   padding: 0 25px;
-  
-}
-
-.item__text {
-  cursor: pointer;
 }
 
 .item__checkbox {
   position: absolute;
-  /* z-index: -1; */
   left: 0;
-  /* padding-left: 25px; */
-  /* opacity: 0; */
-  cursor: pointer;
+  z-index: -1;
+  opacity: 0;
 }
 
 .item__text::before {
   content: '';
   position: absolute;
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
+  top: 1px;
   left: 0;
-  border: 1px solid #adb5bd;
-  margin-right: 5px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50%;
-  cursor: pointer;
-  
-}
-/* 
-.item__checkbox:checked + .item__text::before {
-  border: 2px solid #4fc1de;
-  background-color: #4fc1de;
-}
+} 
 
-.item__checkbox:checked + label::after {
-  content:'';
+.item__text::after {
+  content: '';
   position: absolute;
   width: 10px;
   height: 10px;
-  left: 0;
-  transform: translateX(24%);
-  border: 2px solid #4fc1de;
-  background-color: #4fc1de;
+  left: 3px;
+  top: 4px;
+  background-color: #2CC185;
+  transition: all .2s ease;
+  opacity: 0;
 }
 
-.item__checkbox:checked + span::before {
-   content:'';
-   position: absolute;
-   width: 16px;
-   height: 16px;
-   left: 0;
-   top: 0;
-   background-color: transparent;
-   border-radius: 2px;
-   border: 2px solid #4fc1de;
+.item__checkbox:checked + .item__text::before {
+  border: 2px solid #2CC185;
 }
-.item__checkbox:checked + span::after {
-   content:'';
-   position: absolute;
-   width: 12px;
-   height: 12px;
-   transition: all .2s ease;
-   opacity: 1;
-   left: 4px;
-   top: calc(50% - 6px);
-   background-color: #4fc1de;
+
+.item__checkbox:checked + .item__text::after {
+  opacity: 1;
 }
-.item__checkbox:not(:checked) + span::before {
-   content:'';
-   position: absolute;
-   width: 16px;
-   height: 16px;
-   left:0;
-   top:calc(50% - 10px);
-   background-color: transparent;
-   border-radius: 2px;
-   border: 2px solid #5d575f;
+
+.item__checkbox:not(:checked) + .item__text::before {
+  border: 2px solid #5d575f;
 }
-.item__checkbox:not(:checked) + span::after {
-   content:'';
-   position: absolute;
-   width: 12px;
-   height: 12px;
-   transition: all .2s ease;
-   opacity: 0;
-   left: 4px;
-   top: calc(50% - 6px);
-   background-color: #7d25a9;
-} */
+
 </style>

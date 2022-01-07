@@ -34,7 +34,8 @@
         class="item__edit-btn"
         @click="onEdit(post.id, post.title)"
       >
-        <img src="../assets/images/edit.svg" alt="">
+        <icon icon="pencil" :size="20" color="#fff" />
+        <!-- <img src="../assets/images/edit.svg" alt=""> -->
       </Button>
       <Button  
         class="item__delete-btn"
@@ -57,10 +58,12 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import Button from '@/components/UI/Button.vue'
+import Icon from "@/components/icomoon/Icomoon.vue";
 
 export default {
   components: {
-    Button
+    Button,
+    Icon
   },
   data() {
     return {
@@ -89,6 +92,7 @@ export default {
   computed: mapGetters(['allPosts']),
   async mounted() {
     this.fetchPosts()
+    
   }
 }
 </script>

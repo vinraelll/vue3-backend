@@ -8,15 +8,14 @@
       class="item__info"
       v-if="!post.editable"
     >
-      <input 
-        class="item__checkbox" 
-        type="checkbox"
-        id="item__checkbox"
-      >
       <label 
         class="item__text"
-        for="item__checkbox"
       >
+        <input 
+          class="item__checkbox" 
+          type="checkbox"
+          @change="onChange(id)"
+        >
         {{ post.title }}
       </label>
     </div>
@@ -82,6 +81,9 @@ export default {
     },
     inputHandler(e) {
       this.savedInputValue = e.target.value
+    },
+    onChange(id) {
+      console.log('work');
     }
   },
   computed: mapGetters(['allPosts']),
@@ -127,7 +129,7 @@ export default {
   padding: 0 25px;
 }
 
-.item__checkbox {
+/* .item__checkbox {
   position: absolute;
   left: 0;
   z-index: -1;
@@ -165,6 +167,6 @@ export default {
 
 .item__checkbox:not(:checked) + .item__text::before {
   border: 2px solid #5d575f;
-}
+} */
 
 </style>

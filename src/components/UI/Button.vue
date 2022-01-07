@@ -1,18 +1,24 @@
 <template>
-  <button class="btn">
+  <button 
+    class="btn"
+    :disabled="disabled"
+  >
     <slot></slot>
   </button>
 </template>
 
 <script>
-export default {
-
+export default { 
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-
 .btn {
   display: inline-block;
   font-size: 12px;

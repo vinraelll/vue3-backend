@@ -3,8 +3,6 @@ import axios from "axios"
 export default {
   state: {
     posts: [],
-    inProgress: [],
-    completed: []
   },
   mutations: {
     updatePosts(state, posts) {
@@ -23,6 +21,9 @@ export default {
     },
     createTodo(state, todo) {
       state.posts.push(todo)
+    },
+    completeTodo(state, id) {
+      const post = state.posts.find()
     }
   },
   actions: {
@@ -42,10 +43,10 @@ export default {
       return state.posts
     },
     inProgress(state) {
-      return state.inProgress
+      return state.posts.filter(p => !p.completed)
     },
     completed(state) {
-      return state.completed
+      return state.posts.filter(p => p.completed)
     }
   }
 }

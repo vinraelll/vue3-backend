@@ -93,15 +93,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-.item:not(:last-child) {
-  margin-bottom: 15px;
+    &:not(:last-child) {
+    margin-bottom: 15px;
+  } 
 }
 
 .item__controls {

@@ -44,7 +44,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "floppy-disk, save2",
-        "name": "floppy-disk",
+        "name": "save",
         "order": 13,
         "id": 99,
         "prevSize": 32
@@ -131,7 +131,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "bin, trashcan",
-        "name": "bin",
+        "name": "delete",
         "order": 12,
         "id": 173,
         "prevSize": 32,

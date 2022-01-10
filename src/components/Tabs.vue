@@ -42,56 +42,56 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .nav {
   margin-bottom: 30px;
-}
 
-.nav__list {
-  display: flex;
-  justify-content: center;
-}
-.nav__item {
-	margin: 0 0.5em;
-	position: relative;
-}
+  &__list {
+    display: flex;
+    justify-content: center;
+  }
 
-.nav__btn {
-	padding: 0 1.5em;
-	color: #74777b;
-	font-weight: 700;
-	transition: color 0.3s;
-}
+  &__item {
+    margin: 0 0.5em;
+    position: relative;
+  }
 
-.nav__btn:hover,
-.nav__btn:focus {
-	color: #2CC185;
-}
+  &__btn {
+    padding: 0 1.5em;
+    color: #74777b;
+    font-weight: 700;
+    transition: color 0.3s;
+  }
 
-.nav__item.tab-current .nav__btn {
-	color: #fff;
-}
+  &__btn:hover,
+  &__btn:focus {
+    color: var(--accent-color);
+  }
 
-.nav__btn::after {
-	position: absolute;
-	bottom: -10px;
-	left: 0;
-	z-index: -1;
-	width: 100%;
-	height: 4px;
-	background: #d2d8d6;
-	content: '';
-	transition: all .3s;
-  /* transform: translateY(4px); */
-}
+  &__item.tab-current &__btn {
+    color: var(--white-color);
+  }
 
-.nav__item.tab-current .nav__btn::after {
-  height: 200%;
-}
+  &__btn::after {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 4px;
+    background: #d2d8d6;
+    content: '';
+    transition: all .3s;
+  }
 
-.nav__btn:hover::after,
-.nav__btn:focus::after,
-.nav__item.tab-current .nav__btn::after {
-	background: #2CC185;
+  &__item.tab-current &__btn::after {
+    height: 200%;
+  }
+
+  &__btn:hover::after,
+  &__btn:focus::after,
+  &__item.tab-current &__btn::after {
+    background: var(--accent-color);
+  }
 }
 </style>

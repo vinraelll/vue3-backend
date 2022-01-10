@@ -17,6 +17,10 @@ ul[class] {
   list-style: none;
 }
 
+ul {
+  padding: 0;
+}
+
 body,
 h1,
 h2,

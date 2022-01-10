@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="nav">
         <div class="header__flexbox">
-          <h1 class="header__logo">ToDo List |</h1>
+          <h1 class="header__logo">ToDo List</h1>
           <form 
             class="header__form"
             @submit.prevent="create"
@@ -68,7 +68,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .nav {
   display: flex;
   justify-content: space-between;
@@ -79,69 +79,68 @@ export default {
   padding: 10px 0;
   margin-bottom: 30px;
   background: #2c3e50;
-}
 
-.header__flexbox {
-  display: flex;
-  align-items: center;
-}
+  &__flexbox {
+    display: flex;
+    align-items: center;
+  }
 
-.header__logo {
-  margin-right: 10px;
-}
+  &__logo {
+    margin-right: 10px;
+  }
 
-.header__form {
-  width: 335px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+  &__form {
+    width: 335px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.header__form-input {
-  width: 200px;
-  height: 36px;
-  padding: 3px;
-  border: 1px solid #fff;
-  outline: transparent;
-  transition: .2s border;
-}
+  &__form-input {
+    width: 200px;
+    height: 36px;
+    padding: 3px;
+    border: 1px solid #fff;
+    outline: transparent;
+    transition: .2s border;
+  }
 
-.header__form-input:focus {
-  border: 1px solid #12c0dd;
-}
+  &__form-input:focus {
+    border: 1px solid var(--accent-color);
+  }
 
-.header__form-btn {
-  padding: 10px 15px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  background-color: #12c0dd;
-  border: 1px solid #12c0dd;
-}
+  &__form-btn {
+    padding: 10px 15px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+  }
 
-.header__form-btn:hover {
-  background-color: #0dd6f8;
-  border-color: #0dd6f8;
-}
+  &__form-btn:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
 
-.header__auth-btn {
-  position: relative;
-  padding-right: 25px;
-  text-transform: uppercase;
-  font-weight: 700;
-}
+  &__auth-btn {
+    position: relative;
+    padding-right: 25px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
 
-.header__auth-btn::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: -4px;
-  height: 25px;
-  width: 20px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-image: url('../assets/images/auth/login.svg');
+  &__auth-btn::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -4px;
+    height: 25px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-image: url('../assets/images/auth/login.svg');
+  }
 }
-
 </style>

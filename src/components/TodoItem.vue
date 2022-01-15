@@ -8,15 +8,13 @@
       class="item__info"
       v-if="!post.editable"
     >
-      <label 
-        class="item__text"
-      >
+      <label class="item__label">
         <input 
           class="item__checkbox" 
           type="checkbox"
           @change="onChange(post.id)"
         >
-        {{ post.title }}
+        <span class="item__text">{{ post.title }}</span>
       </label>
     </div>
     <input 
@@ -31,18 +29,23 @@
       class="item__controls"
     >
       <Button 
-        class="item__edit-btn"
+        class="item__edit-btn item__btn"
         @click="onEdit(post.id, post.title)"
       >
         <icon icon="pencil" :size="20" color="#fff" />
         
       </Button>
       <Button  
-        class="item__delete-btn"
+        class="item__delete-btn item__btn"
         @click="deletePost(post.id)"
       >
         <icon icon="delete" :size="20" color="#fff" />
         
+      </Button>
+      <Button
+        class="item__expand-btn item__btn"
+      >
+        <icon icon="arrow" :size="20" color="#fff" />
       </Button>
     </div>
     <div v-else>
@@ -108,6 +111,10 @@ export default {
   &:not(:last-child) {
     margin-bottom: 15px;
   }
+
+  &__label {
+    cursor: pointer;
+  }
   
   &__checkbox {
     position: absolute;
@@ -118,6 +125,8 @@ export default {
 
   &__text {
     position: relative;
+    display: flex;
+    max-width: 550px;
     padding-left: 20px;
   }
 
@@ -128,7 +137,7 @@ export default {
     height: 16px;
     top: 1px;
     left: 0;
-    border: 2px solid var(--accent-color);
+    border: 2px solid #5d575f;
   }
 
   &__text::after {
@@ -140,23 +149,22 @@ export default {
     top: 4px;
     background-color: var(--accent-color);
     transition: all .2s ease;
+    transform: scale(0);
     opacity: 0;
   }
 
-  // &__text::before.checked {
-  //   border: 2px solid #5d575f;
-  // }
-  // &__checkbox:checked > &__text::before {
-  //   border: 2px solid var(--accent-color);
-  // }
+  &__text::before + &__checkbox:not(:checked) {
+    border: 2px solid #5d575f;
+  } 
 
-  // &__checkbox:checked + &__text::after {
-  //   opacity: 1;
-  // }
+  &__checkbox:checked + &__text::before {
+    border: 2px solid var(--accent-color);
+  }
 
-  // &__text::before + &__checkbox:not(:checked) {
-  //   border: 2px solid #5d575f;
-  // } 
+  &__checkbox:checked + &__text::after {
+    opacity: 1;
+    transform: scale(1);
+  }
 
   &__controls {
     display: flex;
@@ -167,11 +175,15 @@ export default {
   &__edit-input {
     width: 100%;
     max-width: 500px;
-    margin-left: 18px;
+    margin-left: 13px;
     padding: 7px 7px 6px 7px;
     border: none;
     border-bottom: 1px solid #ccc;
     outline: transparent;
+  }
+
+  &__btn:not(:last-child) {
+    margin-right: 10px;
   }
 
   &__edit-btn {

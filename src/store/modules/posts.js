@@ -29,10 +29,9 @@ export default {
   actions: {
     async fetchPosts({ commit }) {
       try {
-        const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=3')
+        const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=5')
         data.forEach(p => p.editable = false)
         commit('updatePosts', data)
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -47,6 +46,6 @@ export default {
     },
     completed(state) {
       return state.posts.filter(p => p.completed)
-    }
+    },
   }
 }

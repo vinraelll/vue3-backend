@@ -3,7 +3,12 @@
     <div class="container container-sm">
       <Tabs />
       <hr>
-      <DynamicComponent />
+      <DynamicComponent 
+        
+      />
+      <Loader 
+        v-if="allPosts.length === 0"
+      />
     </div>
   </main>
 </template>
@@ -11,6 +16,7 @@
 <script>
 import DynamicComponent from '@/components/DynamicComponent.vue'
 import Tabs from '@/components/Tabs.vue'
+import Loader from '@/components/UI/Loader.vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -19,7 +25,8 @@ computed: {
 },
 components: {
     DynamicComponent,
-    Tabs
+    Tabs,
+    Loader
   }
 }
 </script>

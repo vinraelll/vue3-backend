@@ -216,7 +216,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "circle-down, down3",
-        "name": "circle-down",
+        "name": "arrow",
         "order": 8,
         "id": 324,
         "prevSize": 32,

@@ -12,7 +12,6 @@
 import TodoItem from '@/components/TodoItem.vue'
 
 export default {
-  name: 'AllTasks',
   components: {
     TodoItem
   }

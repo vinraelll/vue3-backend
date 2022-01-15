@@ -2,9 +2,10 @@
   <ul
     
   >
-    <TodoItem
+    <li
       v-for="post in allPosts"
       :key="post.id"
+      class="item"
     >
       <div 
         class="item__info"
@@ -58,19 +59,17 @@
           <icon icon="save" :size="20" color="#fff" />
         </Button>
       </div>
-    </TodoItem>
+    </li>
   </ul>
 </template>
 
 <script>
-import TodoItem from '@/components/TodoItem.vue'
 import Button from '@/components/UI/Button.vue'
 import Icon from "@/components/icomoon/Icomoon.vue";
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   components: {
-    TodoItem,
     Button,
     Icon
   },
@@ -81,7 +80,7 @@ export default {
   },
   methods: {
     ...mapActions(['fetchPosts']),
-    ...mapMutations(['deletePost', 'editTodo', 'saveTodo']),
+    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo']),
     onSave(id, value) {
       this.editTodo(id)
       this.saveTodo({ id, value })
@@ -95,15 +94,11 @@ export default {
       this.savedInputValue = e.target.value
     },
     onChange(id) {
-      
-      console.log('checked', id);
+      this.completeTodo(id)
     }
   },
   computed: mapGetters(['allPosts']),
-  async mounted() {
-    this.fetchPosts()
-    
-  }
+  
 }
 </script>
 

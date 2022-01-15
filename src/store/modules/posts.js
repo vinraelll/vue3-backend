@@ -23,7 +23,9 @@ export default {
       state.posts.push(todo)
     },
     completeTodo(state, id) {
-      const post = state.posts.find()
+      const post = state.posts.find(p => p.id === id)
+      post.completed = !post.completed
+      console.log(post.completed);
     }
   },
   actions: {
@@ -31,6 +33,7 @@ export default {
       try {
         const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=5')
         data.forEach(p => p.editable = false)
+        data.forEach(p => p.completed = false)
         commit('updatePosts', data)
       } catch (error) {
         console.log(error);
@@ -41,7 +44,7 @@ export default {
     allPosts(state) {
       return state.posts
     },
-    inProgress(state) {
+    incompleted(state) {
       return state.posts.filter(p => !p.completed)
     },
     completed(state) {

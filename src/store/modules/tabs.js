@@ -1,7 +1,7 @@
 export default {
   state: {
     tabName: 'All Tasks',
-    tabs: ['Create task', 'All Tasks', 'Incompleted', 'Completed']
+    tabs: ['All Tasks', 'Incompleted', 'Completed']
   },
   getters: {
     allTabs(state) {

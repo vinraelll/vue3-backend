@@ -1,6 +1,13 @@
 <template>
   <nav class="nav">
     <ul class="nav__list">
+      <li class="nav__create">
+        <button
+          class="nav__create-btn"
+        >
+          Create task +
+        </button> 
+      </li>
       <li 
         class="nav__item"
         :class="{'tab-current': tabCurrent === tab}"
@@ -23,7 +30,6 @@
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
-  name: 'Tabs',
   data() {
     return {
       tabCurrent: 'All Tasks'
@@ -54,6 +60,18 @@ export default {
   &__item {
     margin: 0 0.5em;
     position: relative;
+  }
+
+  &__create {
+    font-weight: 700;
+
+    &-btn:hover {
+      color: crimson;
+    }
+
+    &-btn:active {
+      transform: scale(0.9);
+    }
   }
 
   &__btn {

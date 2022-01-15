@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Header from '@/components/Header.vue'
 import Main from '@/components/Main.vue'
 import Auth from '@/components/Auth'
@@ -41,12 +42,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchPosts']),
     openAuth() {
       this.modalOpen = !this.modalOpen
     },
     modalClose() {
       this.modalOpen = !this.modalOpen
     }
+  },
+  async mounted() {
+    this.fetchPosts()
+    
   }
 }
 </script>

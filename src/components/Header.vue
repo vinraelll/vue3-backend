@@ -4,25 +4,6 @@
       <nav class="nav">
         <div class="header__flexbox">
           <h1 class="header__logo">ToDo List</h1>
-          <form 
-            class="header__form"
-            @submit.prevent="create"
-          >
-            <input 
-              class="header__form-input" 
-              type="text" 
-              placeholder="Type new task here"
-              v-model="newTodo" 
-              id="createTodo"
-            >
-            <label for="createTodo" class="header__form-label"></label>
-            <button 
-              class="header__form-btn"
-              type="submit"
-            >
-              Add new task
-            </button>
-          </form>
         </div>
         <div class="header__auth">
           <button 
@@ -38,33 +19,8 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-
 export default {
-  data() {
-    return {
-      newTodo: ''
-    }
-  },
-  methods: {
-    ...mapMutations(['createTodo']),
-    create() {
-      if (this.newTodo.trim()) {
-        const todo = {
-          id: Date.now(),
-          title: this.newTodo,
-          body: '',
-          editable: false
-        }
 
-        this.createTodo(todo)
-        this.newTodo = ''
-      }
-
-      return
-    }
-  }
- 
 }
 </script>
 

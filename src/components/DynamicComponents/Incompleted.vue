@@ -1,6 +1,7 @@
 <template>
-  <ul
-    
+  <transition-group
+    tag="ul"
+    name="list"
   >
     <li
       v-for="incompletedPost in incompleted"
@@ -60,7 +61,7 @@
         </Button>
       </div>
     </li>
-  </ul>
+  </transition-group>
 </template>
 
 <script>
@@ -193,5 +194,35 @@ export default {
     position: relative;
     padding-right: 25px;
   }
+}
+
+// animation
+
+.list-enter-from {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.list-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.list-enter-active {
+  transition: all .3s ease;
+}
+
+.list-leave-from {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.list-leave-active {
+  transition: all .3s ease;
 }
 </style>

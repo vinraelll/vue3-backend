@@ -3,6 +3,7 @@ import axios from 'axios'
 export default {
   state: {
     posts: [],
+    createOpen: false
   },
   mutations: {
     updatePosts(state, posts) {
@@ -18,6 +19,10 @@ export default {
     saveTodo(state, { id, value }) {
       const post = state.posts.find(p => p.id === id)
       post.title = value
+    },
+    toggleCreateModal(state) {
+      state.createOpen = !state.createOpen
+      console.log(state.createOpen);
     },
     createTodo(state, todo) {
       state.posts.push(todo)
@@ -50,5 +55,8 @@ export default {
     completed(state) {
       return state.posts.filter(p => p.completed)
     },
+    createModal(state) {
+      return state.createOpen
+    }
   }
 }

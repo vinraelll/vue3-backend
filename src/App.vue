@@ -5,7 +5,7 @@
   >
     <div
       class="body-overlay"
-      :class="{'is-open': modalOpen}"
+      :class="{'is-open': authOpen}"
     >
       <div></div>
       <div></div>
@@ -13,46 +13,57 @@
     </div>
     <transition name="modal">
       <Auth 
-        v-if="modalOpen"
-        @modalClose="modalClose"
+        v-if="authOpen"
+        @modalClose="authClose"
       />
     </transition>
     <Header 
       @openModalWindow="openAuth"
     />
-    <Main />
+    <Main 
+
+    />
+    <CreateForm 
+      v-if="createModal"
+    />
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Header from '@/components/Header.vue'
 import Main from '@/components/Main.vue'
 import Auth from '@/components/Auth'
+import CreateForm from '@/components/CreateForm'
+import { computed } from '@vue/reactivity'
 
 export default {
   components: {
     Header,
     Main,
     Auth,
+    CreateForm
   },
   data() {
     return {
-      modalOpen: false,
+      authOpen: false,
     }
   },
   methods: {
     ...mapActions(['fetchPosts']),
     openAuth() {
-      this.modalOpen = !this.modalOpen
+      this.authOpen = !this.authOpen
     },
-    modalClose() {
-      this.modalOpen = !this.modalOpen
+    authClose() {
+      this.authOpen = !this.authOpen
     }
   },
   async mounted() {
     this.fetchPosts()
     
+  },
+  computed: {
+    ...mapGetters(['createModal']),
   }
 }
 </script>

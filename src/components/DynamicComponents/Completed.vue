@@ -1,6 +1,7 @@
 <template>
-  <ul
-    
+  <transition-group
+    tag="ul"
+    name="list"
   >
     <li
       v-for="completedPost in completed"
@@ -12,6 +13,7 @@
       >
         <label class="item__label">
           <input 
+            checked
             class="item__checkbox" 
             type="checkbox"
             @change="onChange(completedPost.id)"
@@ -36,12 +38,12 @@
         </Button>
       </div> 
     </li>
-  </ul>
+  </transition-group>
 </template>
 
 <script>
 import Button from '@/components/UI/Button.vue'
-import Icon from "@/components/icomoon/Icomoon.vue";
+import Icon from "@/components/icomoon/Icomoon.vue"
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -50,7 +52,10 @@ export default {
     Icon
   },
   methods: {
-    ...mapMutations(['deletePost', 'editTodo', 'saveTodo']),
+    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo']),
+    onChange(id) {
+      this.completeTodo(id)
+    }
   },  
   computed: mapGetters(['completed'])
 }
@@ -123,7 +128,6 @@ export default {
   &__controls {
     display: flex;
     justify-content: space-between;
-    min-width: 100px;
   }
 
   &__btn:not(:last-child) {
@@ -134,5 +138,35 @@ export default {
     position: relative;
     padding-right: 25px;
   }
+}
+
+// animation
+
+.list-enter-from {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.list-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.list-enter-active {
+  transition: all .3s ease;
+}
+
+.list-leave-from {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.list-leave-active {
+  transition: all .3s ease;
 }
 </style>

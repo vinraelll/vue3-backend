@@ -4,6 +4,7 @@
       <li class="nav__create">
         <button
           class="nav__create-btn"
+          @click="toggleCreateModal"
         >
           Create task +
         </button> 
@@ -36,7 +37,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['changeTab']),
+    ...mapMutations(['changeTab', 'toggleCreateModal']),
     onChangeTab(tab) {
       this.changeTab(tab)
       this.tabCurrent = tab

@@ -64,6 +64,7 @@ export default {
   padding-top: 50px;
   color: #C4CBC9;
   background-color: var(--white-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-top: 4px solid var(--accent-color);
   border-radius: 1%;
   transform: translate(-50%, -50%);

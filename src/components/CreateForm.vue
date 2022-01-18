@@ -16,6 +16,7 @@
       <textarea
         class="form__textarea"
         placeholder="Description"
+        v-model="description"
       ></textarea>
       <button 
         class="form__btn" 
@@ -47,7 +48,8 @@ import { mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      newTodo: ''
+      newTodo: '',
+      description: ''
     }
   },
   methods: {
@@ -57,11 +59,13 @@ export default {
         this.createTodo({
           id: Date.now(),
           title: this.newTodo,
-          body: '',
+          body: this.description,
           editable: false
         })
 
         this.newTodo = ''
+        this.description = ''
+        this.toggleCreateModal()
       }
 
       return
@@ -73,7 +77,6 @@ export default {
 
 <style lang="scss" scoped>
 .create {
-  border: 1px solid black;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -83,6 +86,7 @@ export default {
   padding: 30px;
   color: #C4CBC9;
   background-color: var(--white-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-top: 4px solid var(--accent-color);
   border-radius: 1%;
   transform: translate(-50%, -50%);

@@ -3,11 +3,13 @@ import axios from 'axios'
 export default {
   state: {
     posts: [],
-    createOpen: false
+    postsLoading: true,
+    createOpen: false,
   },
   mutations: {
     updatePosts(state, posts) {
-      state.posts = posts
+      state.posts = posts,
+      state.postsLoading = false
     },
     deletePost(state, id) {
       state.posts = state.posts.filter(p => p.id !== id)
@@ -16,21 +18,26 @@ export default {
       const post = state.posts.find(p => p.id === id)
       post.editable = !post.editable
     },
-    saveTodo(state, { id, value }) {
+    saveTodo(state, { id, title, desc }) {
       const post = state.posts.find(p => p.id === id)
-      post.title = value
+      post.title = title,
+      post.body = desc
+      console.log(post);
     },
     toggleCreateModal(state) {
       state.createOpen = !state.createOpen
       console.log(state.createOpen);
     },
     createTodo(state, todo) {
-      state.posts.push(todo)
+      state.posts.unshift(todo)
     },
     completeTodo(state, id) {
       const post = state.posts.find(p => p.id === id)
       post.completed = !post.completed
-      console.log(post.completed);
+    },
+    expandTodo(state, id) {
+      const post = state.posts.find(p => p.id === id)
+      post.expanded = !post.expanded
     }
   },
   actions: {
@@ -39,6 +46,7 @@ export default {
         const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=5')
         data.forEach(p => p.editable = false)
         data.forEach(p => p.completed = false)
+        data.forEach(p => p.expanded = false)
         commit('updatePosts', data)
       } catch (error) {
         console.log(error);
@@ -57,6 +65,9 @@ export default {
     },
     createModal(state) {
       return state.createOpen
+    },
+    loadingStatus(state) {
+      return state.postsLoading
     }
   }
 }

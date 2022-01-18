@@ -8,57 +8,62 @@
       :key="incompletedPost.id"
       class="item"
     >
-      <div 
-        class="item__info"
-        v-if="!incompletedPost.editable"
-      >
-        <label class="item__label">
-          <input 
-            class="item__checkbox" 
-            type="checkbox"
-            @change="onChange(incompletedPost.id)"
+      <div class="item__wrapper">
+        <div 
+          class="item__info"
+          v-if="!incompletedPost.editable"
+        >
+          <label class="item__label">
+            <input 
+              class="item__checkbox" 
+              type="checkbox"
+              @change="onChange(incompletedPost.id)"
+            >
+            <span class="item__text">{{ incompletedPost.title }}</span>
+          </label>
+        </div>
+        <input 
+          type="text" 
+          class="item__edit-input"
+          :value="incompletedPost.title"
+          @input="inputHandler"
+          v-else
+        >
+        <div
+          v-if="!incompletedPost.editable"
+          class="item__controls"
+        >
+          <Button 
+            class="item__edit-btn item__btn"
+            @click="onEdit(incompletedPost.id, incompletedPost.title)"
           >
-          <span class="item__text">{{ incompletedPost.title }}</span>
-        </label>
+            <icon icon="pencil" :size="20" color="#fff" />
+            
+          </Button>
+          <Button  
+            class="item__delete-btn item__btn"
+            @click="deletePost(incompletedPost.id)"
+          >
+            <icon icon="delete" :size="20" color="#fff" />
+            
+          </Button>
+          <Button
+            class="item__expand-btn item__btn"
+          >
+            <icon icon="arrow" :size="20" color="#fff" />
+          </Button>
+        </div>
+        <div v-else>
+          <Button 
+            class="item__save-btn"
+            @click="onSave(incompletedPost.id, savedInputValue)"
+          >
+            <icon icon="save" :size="20" color="#fff" />
+          </Button>
+        </div>
       </div>
-      <input 
-        type="text" 
-        class="item__edit-input"
-        :value="incompletedPost.title"
-        @input="inputHandler"
-        v-else
-      >
-      <div
-        v-if="!incompletedPost.editable"
-        class="item__controls"
-      >
-        <Button 
-          class="item__edit-btn item__btn"
-          @click="onEdit(incompletedPost.id, incompletedPost.title)"
-        >
-          <icon icon="pencil" :size="20" color="#fff" />
-          
-        </Button>
-        <Button  
-          class="item__delete-btn item__btn"
-          @click="deletePost(incompletedPost.id)"
-        >
-          <icon icon="delete" :size="20" color="#fff" />
-          
-        </Button>
-        <Button
-          class="item__expand-btn item__btn"
-        >
-          <icon icon="arrow" :size="20" color="#fff" />
-        </Button>
-      </div>
-      <div v-else>
-        <Button 
-          class="item__save-btn"
-          @click="onSave(incompletedPost.id, savedInputValue)"
-        >
-          <icon icon="save" :size="20" color="#fff" />
-        </Button>
+      <div class="item__description">
+        {{ incompletedPost.body }}
       </div>
     </li>
   </transition-group>
@@ -105,11 +110,16 @@ export default {
 <style lang="scss" scoped>
 .item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 
   &:not(:last-child) {
     margin-bottom: 15px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__label {
@@ -193,6 +203,15 @@ export default {
     &__info {
     position: relative;
     padding-right: 25px;
+  }
+
+  &__description {
+    max-width: 530px;
+    margin-left: 7px;
+    padding: 3px 5px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--gray-color);
+    border-left: 1px solid var(--gray-color);
   }
 }
 

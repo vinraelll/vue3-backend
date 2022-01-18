@@ -8,59 +8,74 @@
       :key="post.id"
       class="item"
     >
-      <div 
-        class="item__info"
-        v-if="!post.editable"
-      >
-        <label class="item__label">
-          <input 
-            class="item__checkbox" 
-            type="checkbox"
-            @change="onChange(post.id)"
+      <div class="item__wrapper">
+        <div 
+          class="item__info"
+          v-if="!post.editable"
+        >
+          <label class="item__label">
+            <input 
+              class="item__checkbox" 
+              type="checkbox"
+              @change="onChange(post.id)"
+            >
+            <span class="item__text">{{ post.title }}</span>
+          </label>
+        </div>
+        <input 
+          type="text" 
+          class="item__edit-input"
+          :value="post.title"
+          @input="inputHandler"
+          v-else
+        >
+        <div
+          v-if="!post.editable"
+          class="item__controls"
+        >
+          <Button 
+            class="item__edit-btn item__btn"
+            @click="onEdit(post.id, post.title)"
           >
-          <span class="item__text">{{ post.title }}</span>
-        </label>
+            <icon icon="pencil" :size="20" color="#fff" />
+            
+          </Button>
+          <Button  
+            class="item__delete-btn item__btn"
+            @click="deletePost(post.id)"
+          >
+            <icon icon="delete" :size="20" color="#fff" />
+            
+          </Button>
+          <Button
+            class="item__expand-btn item__btn"
+            @click="expandTodo(post.id)"
+          >
+            <icon icon="arrow" :size="20" color="#fff" />
+          </Button>
+        </div>
+        <div v-else>
+          <Button 
+            class="item__save-btn"
+            @click="onSave(post.id, savedInputValue, description)"
+          >
+            <icon icon="save" :size="20" color="#fff" />
+          </Button>
+        </div>
       </div>
-      <input 
-        type="text" 
-        class="item__edit-input"
-        :value="post.title"
-        @input="inputHandler"
-        v-else
-      >
-      <div
-        v-if="!post.editable"
-        class="item__controls"
-      >
-        <Button 
-          class="item__edit-btn item__btn"
-          @click="onEdit(post.id, post.title)"
-        >
-          <icon icon="pencil" :size="20" color="#fff" />
-          
-        </Button>
-        <Button  
-          class="item__delete-btn item__btn"
-          @click="deletePost(post.id)"
-        >
-          <icon icon="delete" :size="20" color="#fff" />
-          
-        </Button>
-        <Button
-          class="item__expand-btn item__btn"
-        >
-          <icon icon="arrow" :size="20" color="#fff" />
-        </Button>
-      </div>
-      <div v-else>
-        <Button 
-          class="item__save-btn"
-          @click="onSave(post.id, savedInputValue)"
-        >
-          <icon icon="save" :size="20" color="#fff" />
-        </Button>
+      <div class="item__description" v-if="post.expanded">
+        <span
+          v-if="!post.editable"
+        >{{ post.body }}</span>
+        <textarea
+          v-if="post.editable"
+          class="item__description-edit"
+          @input="onTextEdit"
+          :value="post.body"
+        ></textarea>
       </div>
     </li>
+    
   </transition-group>
 </template>
 
@@ -77,14 +92,15 @@ export default {
   data() {
     return {
       savedInputValue: '',
+      description: ''
     }
   },
   methods: {
     ...mapActions(['fetchPosts']),
-    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo']),
-    onSave(id, value) {
+    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo', 'expandTodo']),
+    onSave(id, title, desc) {
       this.editTodo(id)
-      this.saveTodo({ id, value })
+      this.saveTodo({ id, title, desc })
       this.savedInputValue = ''
     },
     onEdit(id, value) {
@@ -93,6 +109,10 @@ export default {
     },
     inputHandler(e) {
       this.savedInputValue = e.target.value
+      
+    },
+    onTextEdit(e) {
+      this.description = e.target.value
     },
     onChange(id) {
       this.completeTodo(id)
@@ -106,11 +126,16 @@ export default {
 <style lang="scss" scoped>
 .item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 
   &:not(:last-child) {
     margin-bottom: 15px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__label {
@@ -195,18 +220,48 @@ export default {
     position: relative;
     padding-right: 25px;
   }
+
+  &__description {
+    // max-width: 530px;
+    // margin-left: 7px;
+    // padding: 3px 5px;
+    // font-size: 14px;
+    // border-bottom: 1px solid var(--gray-color);
+    // border-left: 1px solid var(--gray-color);
+
+    & span {
+      display: block;
+      max-width: 530px;
+      margin-left: 7px;
+      padding: 3px 5px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--gray-color);
+      border-left: 1px solid var(--gray-color);
+    }
+
+    &-edit {
+      resize: none;
+      width: 530px;
+      margin-left: 7px;
+      padding: 3px 5px;
+      font-size: 14px;
+      border: none;
+      border-bottom: 1px solid var(--gray-color);
+      border-left: 1px solid var(--gray-color);
+    }
+  }
 }
 
 // animation
 
 .list-enter-from {
   opacity: 0;
-  transform: scale(0.6);
+  transform: translateX(100px)
 }
 
 .list-enter-to {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0)
 }
 
 .list-enter-active {
@@ -215,12 +270,12 @@ export default {
 
 .list-leave-from {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0)
 }
 
 .list-leave-to {
   opacity: 0;
-  transform: scale(0);
+  transform: translateX(100px)
 }
 
 .list-leave-active {

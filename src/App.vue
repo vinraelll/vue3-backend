@@ -1,7 +1,6 @@
 <template>
   <div 
     class="app"
-    
   >
     <div
       class="body-overlay"

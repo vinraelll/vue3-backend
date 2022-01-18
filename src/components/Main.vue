@@ -3,17 +3,21 @@
     <div class="container container-sm">
       <Tabs />
       <hr>
-      <DynamicComponent 
-        
-      />
       <Loader 
-        v-if="allPosts.length === 0"
+        v-if="loadingStatus"
+      />
+      <DynamicComponent 
+        v-else-if="allPosts.length"
+      />
+      <Notification 
+        v-else
       />
     </div>
   </main>
 </template>
 
 <script>
+import Notification from '@/components/NoTodosNotification'
 import DynamicComponent from '@/components/DynamicComponent.vue'
 import Tabs from '@/components/Tabs.vue'
 import Loader from '@/components/UI/Loader.vue'
@@ -21,12 +25,13 @@ import { mapGetters } from 'vuex'
 
 export default {
 computed: {
-  ...mapGetters(['allPosts', 'inProgress', 'completed'])
+  ...mapGetters(['allPosts', 'incompleted', 'completed', 'loadingStatus'])
 },
 components: {
     DynamicComponent,
     Tabs,
-    Loader
+    Loader,
+    Notification
   }
 }
 </script>

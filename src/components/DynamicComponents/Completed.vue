@@ -8,35 +8,40 @@
       :key="completedPost.id"
       class="item"
     >
-      <div 
-        class="item__info"
-      >
-        <label class="item__label">
-          <input 
-            checked
-            class="item__checkbox" 
-            type="checkbox"
-            @change="onChange(completedPost.id)"
+      <div class="item__wrapper">
+        <div 
+          class="item__info"
+        >
+          <label class="item__label">
+            <input 
+              checked
+              class="item__checkbox" 
+              type="checkbox"
+              @change="onChange(completedPost.id)"
+            >
+            <span class="item__text">{{ completedPost.title }}</span>
+          </label>
+        </div>
+        <div
+          class="item__controls"
+        >
+          <Button  
+            class="item__delete-btn item__btn"
+            @click="deletePost(post.id)"
           >
-          <span class="item__text">{{ completedPost.title }}</span>
-        </label>
+            <icon icon="delete" :size="20" color="#fff" />
+            
+          </Button>
+          <Button
+            class="item__expand-btn item__btn"
+          >
+            <icon icon="arrow" :size="20" color="#fff" />
+          </Button>
+        </div> 
       </div>
-      <div
-        class="item__controls"
-      >
-        <Button  
-          class="item__delete-btn item__btn"
-          @click="deletePost(post.id)"
-        >
-          <icon icon="delete" :size="20" color="#fff" />
-          
-        </Button>
-        <Button
-          class="item__expand-btn item__btn"
-        >
-          <icon icon="arrow" :size="20" color="#fff" />
-        </Button>
-      </div> 
+      <div class="item__description">
+        {{ completedPost.body }}
+      </div>
     </li>
   </transition-group>
 </template>
@@ -64,11 +69,16 @@ export default {
 <style lang="scss" scoped>
 .item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 
   &:not(:last-child) {
     margin-bottom: 15px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__label {
@@ -138,18 +148,27 @@ export default {
     position: relative;
     padding-right: 25px;
   }
+
+  &__description {
+    max-width: 530px;
+    margin-left: 7px;
+    padding: 3px 5px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--gray-color);
+    border-left: 1px solid var(--gray-color);
+  }
 }
 
 // animation
 
 .list-enter-from {
   opacity: 0;
-  transform: scale(0.6);
+  transform: translateX(-100px)
 }
 
 .list-enter-to {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0)
 }
 
 .list-enter-active {
@@ -158,12 +177,12 @@ export default {
 
 .list-leave-from {
   opacity: 1;
-  transform: scaleX(1);
+  transform: translateX(0)
 }
 
 .list-leave-to {
   opacity: 0;
-  transform: scale(0);
+  transform: translateX(-100px)
 }
 
 .list-leave-active {

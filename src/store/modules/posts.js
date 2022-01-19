@@ -11,6 +11,13 @@ export default {
       state.posts = posts,
       state.postsLoading = false
     },
+    resetTasks(state) {
+      state.posts.forEach(p => p.expanded = false)
+      state.posts.forEach(p => p.editable = false)
+    },
+    expandAll(state) {
+      state.posts.forEach(p => p.expanded = true)
+    },
     deletePost(state, id) {
       state.posts = state.posts.filter(p => p.id !== id)
     },

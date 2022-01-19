@@ -13,6 +13,7 @@
             class="auth__form-username auth__input"
             placeholder="Username"
             required
+            v-model="name"
           >
         </label>
         
@@ -22,6 +23,7 @@
             class="auth__form-password auth__input"
             placeholder="Password"
             required
+            v-model="password"
           >
         </label>
         <button 
@@ -45,9 +47,20 @@
 
 <script>
 export default {
+  data() {
+    return {
+      name: '',
+      password: ''
+    }
+  },
   methods: {
     onSubmit() {
-      this.$emit('modalClose')
+      const user = {
+        name: this.name,
+        password: this.password
+      }
+
+      console.log(user);
     }
   }
 }

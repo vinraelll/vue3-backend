@@ -27,20 +27,25 @@
         >
           <Button  
             class="item__delete-btn item__btn"
-            @click="deletePost(post.id)"
+            @click="deletePost(completedPost.id)"
           >
             <icon icon="delete" :size="20" color="#fff" />
             
           </Button>
           <Button
             class="item__expand-btn item__btn"
+            @click="expandTodo(completedPost.id)"
           >
             <icon icon="arrow" :size="20" color="#fff" />
           </Button>
         </div> 
       </div>
-      <div class="item__description">
-        {{ completedPost.body }}
+      <div class="item__description" v-if="completedPost.expanded">
+        <span
+          v-if="!completedPost.editable"
+        >
+          {{ completedPost.body }}
+        </span>
       </div>
     </li>
   </transition-group>
@@ -52,12 +57,16 @@ import Icon from "@/components/icomoon/Icomoon.vue"
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
+  created() {
+    this.resetTasks()
+    this.expandAll()
+  },
   components: {
     Button,
     Icon
   },
   methods: {
-    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo']),
+    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo', 'expandTodo', 'expandAll', 'resetTasks']),
     onChange(id) {
       this.completeTodo(id)
     }

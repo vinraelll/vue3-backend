@@ -1,22 +1,36 @@
 <template>
-  <Header 
-    
+  <Main 
+    class="main"
   />
-  <main>
-    <router-view></router-view>
-  </main>
+  <CreateModal 
+    v-if="createModal"
+  />
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import Main from '@/components/Main.vue'
+import CreateModal from '@/components/CreateForm'
 
 export default {
   components: {
-    Header
+    Main,
+    CreateModal
+  },
+  data() {
+    return {
+      
+    }
   },
   methods: {
     ...mapActions(['fetchPosts']),
+    
+  },
+  async mounted() {
+    this.fetchPosts()
+  },
+  computed: {
+    ...mapGetters(['createModal']),
   }
 }
 </script>
@@ -39,6 +53,10 @@ export default {
   max-width: 768px;
 }
 
+main {
+  color: var(--text-color);
+}
+
 /* .body-overlay {
   position: absolute;
   top: 0;
@@ -58,50 +76,6 @@ export default {
   opacity: 0;
   visibility: hidden;
   transition: .6s linear .6s;
-}
-
-.body-overlay div::before,
-.body-overlay div::after {
-  position: fixed;
-  left: 0;
-  content: '';
-  width: 100%;
-  height: calc(100% / 6);
-  background: rgba(0, 0, 0, .7);
-  transform: rotateX(-270deg);
-  transition: .3s linear;
-}
-.body-overlay div:nth-child(1)::before {
-  top: 0;
-}
-.body-overlay div:nth-child(1)::after {
-  top: calc(100% / 6);
-  transition-delay: .1s;
-}
-.body-overlay div:nth-child(2)::before {
-  top: calc(100% / 6 * 2);
-  transition-delay: .2s;
-}
-.body-overlay div:nth-child(2)::after {
-  top: calc(100% / 6 * 3);
-  transition-delay: .3s;
-}
-.body-overlay div:nth-child(3)::before {
-  top: calc(100% / 6 * 4);
-  transition-delay: .4s;
-}
-.body-overlay div:nth-child(3)::after {
-  bottom: 0;
-  transition-delay: .5s;
-}
-.body-overlay.is-open {
-  opacity: 1;
-  visibility: visible;
-  transition: .6s linear;
-}
-.body-overlay.is-open div::before,
-.body-overlay.is-open div::after {
-  transform: rotateX(0);
 }
 
 /* animations */

@@ -49,6 +49,7 @@
           </Button>
           <Button
             class="item__expand-btn item__btn"
+            @click="expandTodo(incompletedPost.id)"
           >
             <icon icon="arrow" :size="20" color="#fff" />
           </Button>
@@ -56,14 +57,22 @@
         <div v-else>
           <Button 
             class="item__save-btn"
-            @click="onSave(incompletedPost.id, savedInputValue)"
+            @click="onSave(incompletedPost.id, savedInputValue, description)"
           >
             <icon icon="save" :size="20" color="#fff" />
           </Button>
         </div>
       </div>
-      <div class="item__description">
-        {{ incompletedPost.body }}
+      <div class="item__description" v-if="incompletedPost.expanded">
+        <span
+          v-if="!incompletedPost.editable"
+        >{{ incompletedPost.body }}</span>
+        <textarea
+          v-if="incompletedPost.editable"
+          class="item__description-edit"
+          @input="onTextEdit"
+          :value="incompletedPost.body"
+        ></textarea>
       </div>
     </li>
   </transition-group>
@@ -75,6 +84,9 @@ import Icon from "@/components/icomoon/Icomoon.vue";
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
+  created() {
+    this.resetTasks()
+  },
   components: {
     Button,
     Icon
@@ -82,13 +94,14 @@ export default {
   data() {
     return {
       savedInputValue: '',
+      description: ''
     }
   },
   methods: {
-    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo']),
-    onSave(id, value) {
+    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo', 'expandTodo', 'resetTasks']),
+    onSave(id, title, desc) {
       this.editTodo(id)
-      this.saveTodo({ id, value })
+      this.saveTodo({ id, title, desc })
       this.savedInputValue = ''
     },
     onEdit(id, value) {
@@ -97,6 +110,9 @@ export default {
     },
     inputHandler(e) {
       this.savedInputValue = e.target.value
+    },
+    onTextEdit(e) {
+      this.description = e.target.value
     },
     onChange(id) {
       this.completeTodo(id)
@@ -206,12 +222,26 @@ export default {
   }
 
   &__description {
-    max-width: 530px;
-    margin-left: 7px;
-    padding: 3px 5px;
-    font-size: 14px;
-    border-bottom: 1px solid var(--gray-color);
-    border-left: 1px solid var(--gray-color);
+    & span {
+      display: block;
+      max-width: 530px;
+      margin-left: 7px;
+      padding: 3px 5px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--gray-color);
+      border-left: 1px solid var(--gray-color);
+    }
+
+    &-edit {
+      resize: none;
+      width: 530px;
+      margin-left: 7px;
+      padding: 3px 5px;
+      font-size: 14px;
+      border: none;
+      border-bottom: 1px solid var(--gray-color);
+      border-left: 1px solid var(--gray-color);
+    }
   }
 }
 

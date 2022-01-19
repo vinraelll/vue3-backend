@@ -1,19 +1,17 @@
 <template>
-  <main class="main">
-    <div class="container container-sm">
-      <Tabs />
-      <hr>
-      <Loader 
-        v-if="loadingStatus"
-      />
-      <DynamicComponent 
-        v-else-if="allPosts.length"
-      />
-      <Notification 
-        v-else
-      />
-    </div>
-  </main>
+  <div class="container container-sm">
+    <Tabs />
+    <hr>
+    <Loader 
+      v-if="loadingStatus"
+    />
+    <DynamicComponent 
+      v-else-if="allPosts.length"
+    />
+    <Notification 
+      v-else
+    />
+  </div>
 </template>
 
 <script>
@@ -37,7 +35,5 @@ components: {
 </script>
 
 <style lang="scss" scoped>
-main {
-  color: var(--text-color);
-}
+
 </style>

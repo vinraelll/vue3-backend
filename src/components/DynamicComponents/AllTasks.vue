@@ -85,6 +85,9 @@ import Icon from "@/components/icomoon/Icomoon.vue";
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
+  created() {
+    this.resetTasks()
+  },
   components: {
     Button,
     Icon
@@ -97,7 +100,7 @@ export default {
   },
   methods: {
     ...mapActions(['fetchPosts']),
-    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo', 'expandTodo']),
+    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo', 'expandTodo', 'resetTasks']),
     onSave(id, title, desc) {
       this.editTodo(id)
       this.saveTodo({ id, title, desc })

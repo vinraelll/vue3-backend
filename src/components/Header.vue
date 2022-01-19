@@ -3,15 +3,18 @@
     <div class="container">
       <nav class="nav">
         <div class="header__flexbox">
-          <h1 class="header__logo">ToDo List</h1>
+          <router-link to="/">
+            <h1 class="header__logo">ToDo App</h1>
+          </router-link>
         </div>
         <div class="header__auth">
-          <button 
+          <router-link 
+            to="/auth"
             class="header__auth-btn"
-            @click="$emit('openModalWindow')"
+            
           >
             Sign in
-          </button>
+          </router-link>
         </div>
       </nav>
     </div>
@@ -19,7 +22,10 @@
 </template>
 
 <script>
+import Button from './UI/Button.vue'
+
 export default {
+  components: { Button },
 
 }
 </script>

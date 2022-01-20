@@ -66,12 +66,12 @@
       <div class="item__description" v-if="post.expanded">
         <span
           v-if="!post.editable"
-        >{{ post.body }}</span>
+        >{{ post.description }}</span>
         <textarea
           v-if="post.editable"
           class="item__description-edit"
           @input="onTextEdit"
-          :value="post.body"
+          :value="post.description"
         ></textarea>
       </div>
     </li>

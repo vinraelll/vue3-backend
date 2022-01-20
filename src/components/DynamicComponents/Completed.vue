@@ -44,7 +44,7 @@
         <span
           v-if="!completedPost.editable"
         >
-          {{ completedPost.body }}
+          {{ completedPost.description }}
         </span>
       </div>
     </li>

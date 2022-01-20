@@ -12,8 +12,10 @@ export default {
       state.postsLoading = false
     },
     resetTasks(state) {
-      state.posts.forEach(p => p.expanded = false)
-      state.posts.forEach(p => p.editable = false)
+      state.posts.forEach((p) => {
+        p.expanded = false
+        p.editable = false
+      })
     },
     expandAll(state) {
       state.posts.forEach(p => p.expanded = true)
@@ -50,14 +52,39 @@ export default {
   actions: {
     async fetchPosts({ commit }) {
       try {
-        const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=5')
-        data.forEach(p => p.editable = false)
-        data.forEach(p => p.completed = false)
-        data.forEach(p => p.expanded = false)
+        const data = await axios.get('https://serene-sea-12622.herokuapp.com/api/posts')
+          // data.forEach(() => {
+          //   p.editable = false
+          //   p.completed = false
+          //   p.expanded = false
+          // })
+
+          console.log(data);
+
         commit('updatePosts', data)
+
       } catch (error) {
         console.log(error);
       }
+
+      // const axios = require('axios')
+      // await axios.get('https://serene-sea-12622.herokuapp.com/api/posts')
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   })
+      //   .then(function () {
+      // });
+
+      
+        // try {
+        //   const response = await axios.get('https://serene-sea-12622.herokuapp.com/api/posts');
+        //   console.log(response);
+        // } catch (error) {
+        //   console.error(error);
+        // }
     }
   },
   getters: {

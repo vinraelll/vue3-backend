@@ -1,10 +1,7 @@
 <template>
   <div class="create">
     <h3 class="create__title">Add new task</h3>
-    <form 
-      class="form" 
-      @submit.prevent="create"
-    >
+    <form class="form" @submit.prevent="create">
       <label class="form__label">
         <input
           class="form__input"
@@ -18,24 +15,11 @@
         placeholder="Description"
         v-model="description"
       ></textarea>
-      <button 
-        class="form__btn" 
-        type="submit"
-        v-if="newTodo"
-      >
+      <button class="form__btn" type="submit" v-if="newTodo">
         Add new task
       </button>
-      <button 
-        class="form__btn disabled"
-        disabled
-        v-else
-      >
-        Add new task
-      </button>
-      <button 
-        class="form__btn form__btn--cancel"
-        @click="toggleCreateModal"
-      >
+      <button class="form__btn disabled" disabled v-else>Add new task</button>
+      <button class="form__btn form__btn--cancel" @click="toggleCreateModal">
         Cancel
       </button>
     </form>
@@ -43,36 +27,41 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   data() {
     return {
-      newTodo: '',
-      description: ''
-    }
+      newTodo: "",
+      description: "",
+    };
   },
   methods: {
-    ...mapMutations(['createTodo', 'toggleCreateModal']),
-    create() {
+    ...mapActions(["createTodo", 'fetchPosts']),
+    ...mapMutations(["toggleCreateModal"]),
+    async create() {
       if (this.newTodo.trim()) {
-        this.createTodo({
-          id: Date.now(),
-          title: this.newTodo,
-          body: this.description,
-          editable: false
-        })
+        try {
+          await this.createTodo({
+            title: this.newTodo,
+            description: this.description,
+            done: false,
+          })
+          await this.fetchPosts()
+          
+          this.newTodo = "";
+          this.description = "";
+          this.toggleCreateModal();
 
-        this.newTodo = ''
-        this.description = ''
-        this.toggleCreateModal()
+        } catch (error) {
+          console.error(error);
+        }
       }
 
-      return
-    }
-  }
- 
-}
+      return;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +73,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   padding: 30px;
-  color: #C4CBC9;
+  color: #c4cbc9;
   background-color: var(--white-color);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-top: 4px solid var(--accent-color);
@@ -109,7 +98,7 @@ export default {
     margin-bottom: 20px;
     padding: 5px;
     border: none;
-    border-bottom: 1px solid #C4CBC9;
+    border-bottom: 1px solid #c4cbc9;
     outline: transparent;
   }
 
@@ -118,11 +107,11 @@ export default {
     margin-bottom: 20px;
     resize: none;
     outline: transparent;
-    border: 1px solid #C4CBC9;
+    border: 1px solid #c4cbc9;
   }
 
   &__textarea::placeholder {
-    color: #C4CBC9;
+    color: #c4cbc9;
   }
 
   &__btn {
@@ -140,7 +129,7 @@ export default {
 
   &__btn:disabled {
     color: var(--white-color);
-    background-color: #C4CBC9;
+    background-color: #c4cbc9;
     cursor: auto;
   }
 

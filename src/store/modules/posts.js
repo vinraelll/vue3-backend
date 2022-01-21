@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@/axios'
 
 export default {
   state: {
@@ -37,9 +37,6 @@ export default {
       state.createOpen = !state.createOpen
       console.log(state.createOpen);
     },
-    createTodo(state, todo) {
-      state.posts.unshift(todo)
-    },
     completeTodo(state, id) {
       const post = state.posts.find(p => p.id === id)
       post.completed = !post.completed
@@ -52,12 +49,13 @@ export default {
   actions: {
     async fetchPosts({ commit }) {
       try {
-        const data = await axios.get('https://serene-sea-12622.herokuapp.com/api/posts')
-          // data.forEach(() => {
-          //   p.editable = false
-          //   p.completed = false
-          //   p.expanded = false
-          // })
+        const { data } = await axios.get('/posts')
+          data.forEach((p) => {
+            p.id = p._id 
+            p.editable = false
+            p.completed = false
+            p.expanded = false
+          })
 
           console.log(data);
 
@@ -66,26 +64,15 @@ export default {
       } catch (error) {
         console.log(error);
       }
-
-      // const axios = require('axios')
-      // await axios.get('https://serene-sea-12622.herokuapp.com/api/posts')
-      //   .then(function (response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   })
-      //   .then(function () {
-      // });
-
-      
-        // try {
-        //   const response = await axios.get('https://serene-sea-12622.herokuapp.com/api/posts');
-        //   console.log(response);
-        // } catch (error) {
-        //   console.error(error);
-        // }
-    }
+    },
+    async createTodo(ctx, todoData) {
+      try {
+        await axios.post('/post', todoData)
+        
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
   getters: {
     allPosts(state) {

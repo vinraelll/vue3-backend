@@ -12,7 +12,7 @@
       @on-change="onChange($event)"
       @on-input="inputHandler($event)"
       @on-edit="onEdit($event)"
-      @on-remove="deletePost($event)"
+      @on-remove="removePost($event)"
       @on-save="onSave"
       @on-textarea="onTextEdit($event)"
     />
@@ -33,12 +33,13 @@ export default {
   data() {
     return {
       savedInputValue: '',
-      description: ''
+      description: '',
+      
     }
   },
   methods: {
-    ...mapActions(['fetchPosts']),
-    ...mapMutations(['deletePost', 'editTodo', 'saveTodo', 'completeTodo', 'expandTodo', 'resetTasks']),
+    ...mapActions(['fetchPosts', 'deletePost', 'completeTodo']),
+    ...mapMutations(['editTodo', 'saveTodo', 'expandTodo', 'resetTasks']),
     onSave(id) {
       console.log('onSave', id);
     },
@@ -51,8 +52,27 @@ export default {
     onTextEdit(e) {
       this.description = value
     },
-    onChange(id) {
-      this.completeTodo(id)
+    async onChange(id) {
+      try {
+        await this.completeTodo(id) 
+        await this.fetchPosts()
+        
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async removePost(id) {
+      this.onDeleting = true
+
+      try {
+        await this.deletePost(id) 
+        await this.fetchPosts()
+
+        this.onDeleting = false
+
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
   computed: mapGetters(['allPosts']),

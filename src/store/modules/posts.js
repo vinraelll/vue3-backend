@@ -20,9 +20,9 @@ export default {
     expandAll(state) {
       state.posts.forEach(p => p.expanded = true)
     },
-    deletePost(state, id) {
-      state.posts = state.posts.filter(p => p.id !== id)
-    },
+    // deletePost(state, id) {
+    //   state.posts = state.posts.filter(p => p.id !== id)
+    // },
     editTodo(state, id) {
       const post = state.posts.find(p => p.id === id)
       post.editable = !post.editable
@@ -31,20 +31,20 @@ export default {
       const post = state.posts.find(p => p.id === id)
       post.title = title,
       post.body = desc
+
       console.log(post);
     },
     toggleCreateModal(state) {
       state.createOpen = !state.createOpen
-      console.log(state.createOpen);
     },
-    completeTodo(state, id) {
-      const post = state.posts.find(p => p.id === id)
-      post.completed = !post.completed
-    },
-    expandTodo(state, id) {
-      const post = state.posts.find(p => p.id === id)
-      post.expanded = !post.expanded
-    }
+    // completeTodo(state, id) {
+    //   const post = state.posts.find(p => p.id === id)
+    //   post.completed = !post.completed
+    // },
+    // expandTodo(state, id) {
+    //   const post = state.posts.find(p => p.id === id)
+    //   post.expanded = !post.expanded
+    // }
   },
   actions: {
     async fetchPosts({ commit }) {
@@ -57,12 +57,10 @@ export default {
             p.expanded = false
           })
 
-          console.log(data);
-
         commit('updatePosts', data)
 
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     async createTodo(ctx, todoData) {
@@ -73,6 +71,24 @@ export default {
         console.error(error);
       }
     },
+    async deletePost(ctx, id) {
+      try {
+        await axios.delete('/post/' + id)
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async completeTodo(ctx, id) {
+      try {
+        const { data } = await axios.get('/post/' + id)
+        data.done = true
+
+        console.log(data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   getters: {
     allPosts(state) {

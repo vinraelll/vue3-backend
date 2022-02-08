@@ -21,6 +21,7 @@ export default {
 <style lang="scss" scoped>
 .btn {
   display: inline-block;
+  width: 44px;
   font-size: 12px;
   font-weight: 700;
   color: var(--white-color);

@@ -35,9 +35,18 @@
         </Button>
         <Button  
           class="item__delete-btn item__btn"
-          @click="$emit('on-remove', id)"
+          @click="$emit('on-remove', id), onDeleting = !onDeleting"
         >
-          <icon icon="delete" :size="20" color="#fff" />
+          <BtnLoader 
+            v-if="onDeleting"
+            class="loader"
+          />
+          <icon 
+            v-else
+            icon="delete" 
+            :size="20" 
+            color="#fff"
+          />
         </Button>
         <Button
           class="item__expand-btn item__btn"
@@ -73,6 +82,7 @@
 </template>
 
 <script>
+import BtnLoader from '@/components/UI/BtnLoader'
 import Button from '@/components/UI/Button'
 import Icon from "@/components/icomoon/Icomoon";
 
@@ -81,6 +91,7 @@ export default {
   components: {
     Button,
     Icon,
+    BtnLoader
   },
   props: {
     id: {
@@ -102,6 +113,7 @@ export default {
     return {
       expanded: false,
       editable: false,
+      onDeleting: false
     }
   },
   methods: {
@@ -240,6 +252,12 @@ export default {
       border-left: 1px solid var(--gray-color);
     }
   }
+}
+
+// loader 
+
+.loader {
+  transform: translateX(-5px);
 }
 
 // animation

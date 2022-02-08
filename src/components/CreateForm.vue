@@ -16,7 +16,16 @@
         v-model="description"
       ></textarea>
       <button class="form__btn" type="submit" v-if="newTodo">
-        Add new task
+        <BtnLoader 
+          v-if="onCreating"
+          class="form__loader"
+        />
+        <span 
+          v-else
+          class="form__btn-text"
+        >
+          Add new task
+        </span>
       </button>
       <button class="form__btn disabled" disabled v-else>Add new task</button>
       <button class="form__btn form__btn--cancel" @click="toggleCreateModal">
@@ -27,20 +36,27 @@
 </template>
 
 <script>
+import BtnLoader from '@/components/UI/BtnLoader'
 import { mapActions, mapMutations } from "vuex";
 
 export default {
+  components: {
+    BtnLoader
+  },
   data() {
     return {
+      onCreating: false,
       newTodo: "",
       description: "",
     };
   },
   methods: {
-    ...mapActions(["createTodo", 'fetchPosts']),
-    ...mapMutations(["toggleCreateModal"]),
+    ...mapActions(['createTodo', 'fetchPosts']),
+    ...mapMutations(['toggleCreateModal']),
     async create() {
       if (this.newTodo.trim()) {
+        this.onCreating = true
+
         try {
           await this.createTodo({
             title: this.newTodo,
@@ -54,6 +70,7 @@ export default {
           this.toggleCreateModal();
 
         } catch (error) {
+          this.onCreating = false
           console.error(error);
         }
       }
@@ -121,6 +138,10 @@ export default {
     font-weight: 700;
     text-transform: uppercase;
     background-color: var(--accent-color);
+  }
+
+  &__btn-text {
+    display: block;
   }
 
   &__btn:not(:last-child) {
